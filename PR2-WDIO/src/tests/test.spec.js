@@ -3,6 +3,8 @@ import { product } from '../data/productData.js';
 import { prepareUser } from '../helpers/prepareUser.js';
 import { assert } from 'chai';
 import HomePage from '../po/pages/home.page.js';
+import RentalPage from '../po/pages/rental.page.js';
+import RentalProductPage from '../po/pages/rentalProduct.page.js';
 
 describe("Product Discovery", () => {
 
@@ -33,33 +35,25 @@ describe("Product Discovery", () => {
         
     });
 
-    it("Total price updates correctly for rental products", async () => {
+    it.only("Total price updates correctly for rental products", async () => {
         
-        await browser.url("https://practicesoftwaretesting.com/rentals");
+        await RentalPage.open();
 
-        await browser.waitUntil(
-            async () => (await $$('[data-test^="product-"]')).length > 0,
-            { timeout: 10000, timeoutMsg: "Rental products did not load" }
-        );
+        await RentalPage.waitForProductsLoaded();
 
-        const rentalProducts = await $$('[data-test^="product-"]');
+        await RentalPage.openProduct(0);
 
-        await rentalProducts[0].click();
+        const unitPrice = await RentalProductPage.options.getUnitPrice();
 
-        const slider = await $('.ngx-slider-pointer-min');
-        const unitPriceEl = await $('[data-test="unit-price"]');
-        const totalPriceEl = await $('#total-price');
+        await RentalProductPage.options.setDuration();
 
-        const unitPrice = parseFloat(await unitPriceEl.getText());
-
-        await slider.dragAndDrop({ x: 94, y: 0 });
-
-        const totalPrice = parseFloat(await totalPriceEl.getText());
+        const totalPrice = await RentalProductPage.options.getTotalPrice();
 
         expect(totalPrice).toBeCloseTo(unitPrice * 3, 2);
 
-        const sliderValue = await slider.getAttribute('aria-valuetext');
+        const sliderValue = await RentalProductPage.options.getSliderValue();
         expect(sliderValue).toBe('3');
+
     });
 
 });

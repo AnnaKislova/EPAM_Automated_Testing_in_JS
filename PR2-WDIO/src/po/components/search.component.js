@@ -33,4 +33,4 @@ class SearchComponent {
     }
 }
 
-export default new SearchComponent();
+export default SearchComponent;
