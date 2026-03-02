@@ -1,5 +1,5 @@
-import { createUser } from '../src/data/user.js';
-import { prepareUser } from '../src/helpers/prepareUser.js';
+import { user } from '../data/user.js';
+import { prepareUser } from '../helpers/prepareUser.js';
 import { assert } from 'chai';
 
 describe("Product Discovery", () => {
@@ -84,13 +84,8 @@ describe("Product Discovery", () => {
 });
 
 describe("Registration and login", () => {
-    let user;
-
-    before(() => {
-        user = createUser();
-    })
-
-        it('The user can successfully register with valid personal data', async () => {
+    
+    it('The user can successfully register with valid personal data', async () => {
 
         await browser.url("https://practicesoftwaretesting.com/auth/register")
         await $('[data-test="first-name"]').setValue(user.firstName);
