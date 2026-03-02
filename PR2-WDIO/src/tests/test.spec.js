@@ -1,32 +1,23 @@
 import { user } from '../data/user.js';
+import { product } from '../data/productData.js';
 import { prepareUser } from '../helpers/prepareUser.js';
 import { assert } from 'chai';
+import HomePage from '../po/pages/home.page.js';
 
 describe("Product Discovery", () => {
 
     it("Search returns products related to 'hammer'", async () => {
         
-        await browser.url('/');
+        await HomePage.open();
 
-        const input = await $('[data-test="search-query"]');
-        await input.setValue('hammer');
+        await HomePage.search.searchFor(product.hammer);
 
-        const searchButton = await $('[data-test="search-submit"]');
-        await searchButton.click();
+        const titles = await HomePage.search.getResultTitles();
 
-        const resultsContainer = await $('[data-test="search_completed"]');
-        await resultsContainer.waitForDisplayed({ timeout: 5000 });
-
-        const productElements = await $$('[data-test="search_completed"] [data-test^="product-"] [data-test="product-name"]');
-
-        const titlesText = [];
-        for (const el of productElements) {
-            titlesText.push(await el.getText());
+        for (const title of titles) {
+            expect(title.toLowerCase()).toHaveText(product.hammer);
         }
 
-        for (const text of titlesText) {
-            expect(text.toLowerCase()).toHaveText('hammer');
-        }
     });
 
     it("Products are sorted by price in ascending order ", async () => {
