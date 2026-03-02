@@ -1,5 +1,5 @@
-export function createUser() {
-    return {
+export const user = {
+    
         firstName: "Irina",
         lastName: "Kishinek",
         dateOfBirthday: "1990-06-12",
@@ -14,5 +14,5 @@ export function createUser() {
         password: "Groza12#$",
 
         newPassword: "Akropol56&*"
-    };
-}
+    
+};
