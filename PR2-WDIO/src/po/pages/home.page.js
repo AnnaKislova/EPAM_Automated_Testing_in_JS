@@ -7,11 +7,11 @@ import SortComponent from '../components/sort.component.js';
 class HomePage {
 
     get search() {
-        return SearchComponent;
+        return new SearchComponent();
     }
 
     get sort() {
-        return SortComponent;
+        return new SortComponent();
     }
 
     async open() {

@@ -31,7 +31,7 @@ class SortComponent {
 
 }
 
-export default new SortComponent();
+export default SortComponent;
 
 
 
