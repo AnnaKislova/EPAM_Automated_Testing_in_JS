@@ -6,7 +6,7 @@ import HomePage from '../po/pages/home.page.js';
 
 describe("Product Discovery", () => {
 
-    it("Search returns products related to 'hammer'", async () => {
+    it.only("Search returns products related to 'hammer'", async () => {
         
         await HomePage.open();
 
@@ -20,26 +20,16 @@ describe("Product Discovery", () => {
 
     });
 
-    it("Products are sorted by price in ascending order ", async () => {
-        await browser.url('/');
+    it.only("Products are sorted by price in ascending order ", async () => {
+        
+        await HomePage.open();
 
-        await $('[data-test="sort"]').selectByAttribute('value', 'price,asc');  
-    
-        const resultsSort = await $('[data-test="sorting_completed"]');
-        await resultsSort.waitForDisplayed({ timeout: 5000 });
+        await HomePage.sort.sortOption('price,asc');
 
-        const priceElements = await $$('[data-test="sorting_completed"] [data-test^="product-"] [data-test="product-price"]');
-        const prices = [];
+        const prices = await HomePage.sort.getPrices();
 
-        for(const el of priceElements) {
-            const priceText = await el.getText();
-            const price = parseFloat(priceText.replace("$", ""));
-            prices.push(price);
-
-        }
-
-    const sorted = [...prices].sort((a, b) => a - b);
-    expect(prices).toEqual(sorted);
+        const sorted = [...prices].sort((a, b) => a - b);
+        expect(prices).toEqual(sorted);
         
     });
 
