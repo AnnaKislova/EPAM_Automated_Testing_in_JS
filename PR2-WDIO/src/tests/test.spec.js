@@ -5,10 +5,13 @@ import { assert } from 'chai';
 import HomePage from '../po/pages/home.page.js';
 import RentalPage from '../po/pages/rental.page.js';
 import RentalProductPage from '../po/pages/rentalProduct.page.js';
+import RegistrationPage from '../po/pages/registration.page.js';
+import LoginPage from '../po/pages/login.page.js';
+import AccountPage from '../po/pages/account.page.js';
 
 describe("Product Discovery", () => {
 
-    it.only("Search returns products related to 'hammer'", async () => {
+    it("Search returns products related to 'hammer'", async () => {
         
         await HomePage.open();
 
@@ -22,7 +25,7 @@ describe("Product Discovery", () => {
 
     });
 
-    it.only("Products are sorted by price in ascending order ", async () => {
+    it("Products are sorted by price in ascending order ", async () => {
         
         await HomePage.open();
 
@@ -35,7 +38,7 @@ describe("Product Discovery", () => {
         
     });
 
-    it.only("Total price updates correctly for rental products", async () => {
+    it("Total price updates correctly for rental products", async () => {
         
         await RentalPage.open();
 
@@ -62,23 +65,11 @@ describe("Registration and login", () => {
     
     it('The user can successfully register with valid personal data', async () => {
 
-        await browser.url("https://practicesoftwaretesting.com/auth/register")
-        await $('[data-test="first-name"]').setValue(user.firstName);
-        await $('[data-test="last-name"]').setValue(user.lastName);
-        await $('[data-test="dob"]').setValue(user.dateOfBirthday);
-        await $('[data-test="street"]').setValue(user.street);
-        await $('[data-test="postal_code"]').setValue(user.postalCode);
-        await $('[data-test="city"]').setValue(user.city);
-        await $('[data-test="state"]').setValue(user.state);
-        const countrySelect = await $('[data-test="country"]');
-        await countrySelect.selectByAttribute('value', user.country);
-        await $('[data-test="phone"]').setValue(user.phone);
-        await $('[data-test="email"]').setValue(user.email);
-        await $('[data-test="password"]').setValue(user.password);
-        await $('[data-test="register-submit"]').click();
+        await RegistrationPage.openRegistrationPage();
 
-        const loginHeader = await $('h3=Login');
-        await loginHeader.waitForDisplayed({ timeout: 10000 });
+        await RegistrationPage.registrationForm.fillRegisterForm(user);
+
+        const loginHeader = await LoginPage.waitForLoginHeader();
 
         await expect(loginHeader).toBeDisplayed();
 
@@ -86,13 +77,11 @@ describe("Registration and login", () => {
 
     it('The user logs in with valid credentials', async () => {
         
-        await browser.url('https://practicesoftwaretesting.com/auth/login');
-        await $('[data-test="email"]').setValue(user.email);
-        await $('[data-test="password"]').setValue(user.password);
-        await $('[data-test="login-submit"]').click();
+        await LoginPage.openLoginPage();
+        await LoginPage.loginForm.fillLoginForm(user);
 
-        const title = await $('[data-test="page-title"]');
-        const titleText = await title.getText();
+        
+        const titleText = await AccountPage.getTitleText();
         expect(titleText).toContain('My account');
 
     });
