@@ -8,6 +8,9 @@ import RentalProductPage from '../po/pages/rentalProduct.page.js';
 import RegistrationPage from '../po/pages/registration.page.js';
 import LoginPage from '../po/pages/login.page.js';
 import AccountPage from '../po/pages/account.page.js';
+import ProductPage from '../po/pages/product.page.js';
+import FavoritesPage from '../po/pages/favorites.page.js';
+import CartPage from '../po/pages/cart.page.js';
 
 describe("Product Discovery", () => {
 
@@ -63,7 +66,7 @@ describe("Product Discovery", () => {
 
 describe("Registration and login", () => {
     
-    it('The user can successfully register with valid personal data', async () => {
+    it.only('The user can successfully register with valid personal data', async () => {
 
         await RegistrationPage.openRegistrationPage();
 
@@ -75,12 +78,11 @@ describe("Registration and login", () => {
 
     });
 
-    it('The user logs in with valid credentials', async () => {
+    it.only('The user logs in with valid credentials', async () => {
         
         await LoginPage.openLoginPage();
         await LoginPage.loginForm.fillLoginForm(user);
 
-        
         const titleText = await AccountPage.getTitleText();
         expect(titleText).toContain('My account');
 
@@ -97,40 +99,31 @@ describe('Shopping actions', () => {
     });
 
     it('The logged-in user adds a product to favorites', async () => {
-        await browser.url('/');
-        const product = await $('[data-test="product-name"]');
-        const productName = await $('[data-test="product-name"]').getText();
-        await product.click();
-        
-        const favoriteBt = await $('[data-test="add-to-favorites"]');
-        await favoriteBt.click();
-        const accountBt = await $('[data-test="nav-menu"]');
-        await accountBt.click();
-        await $('[data-test="nav-my-favorites"]').click();
+        await HomePage.open();
+        const productName = await HomePage.productList.getFirstProductName();
+        await HomePage.productList.openFirstProduct();
 
-        const pageTitle =  await $('[data-test="page-title"]');
-        const titleText = await pageTitle.getText();
+        await ProductPage.addToFavorite();
+        await ProductPage.header.openFavorites();
+
+        const titleText = await FavoritesPage.getFavoritesTitle();
         assert.equal(titleText, "Favorites", "Expected to be on My account page");
-        const productFavorite = await $('[data-test="product-name"]').getText();
+
+        const productFavorite = await FavoritesPage.productList.getFirstProductName();
         assert.equal(productFavorite, productName, "Product favorite should match the one added")
 
-    })
+    });
 
     it("The logged-in user adds a product to the cart", async () => {
-        await browser.url('/');
-        const product = await $('[data-test="product-name"]');
-        const productName = await $('[data-test="product-name"]').getText();
-        await product.click();
+        
+        await HomePage.open();
+        const productName = await HomePage.productList.getFirstProductName();
+        await HomePage.productList.openFirstProduct();
 
-        const addToCartBtn = await $('[data-test="add-to-cart"]');
-        await addToCartBtn.waitForExist({ timeout: 10000 });
-        await addToCartBtn.click();
-
-        const cartBtn = await $('[data-test="nav-cart"]')
-        await cartBtn.click();
-
-        const productTitle = await $('[data-test="product-title"]');
-        const productText = await productTitle.getText();
+        await ProductPage.addToCart();
+        await ProductPage.header.openCart();
+        
+        const productText = await CartPage.cartItems.getProductName();
 
         assert.equal(productText.trim(), productName.trim(), `Expected product in a cart to be ${productName}`);
     })

@@ -1,14 +1,14 @@
 import { user } from '../data/user.js';
+import LoginPage from '../po/pages/login.page.js';
+import AccountPage from '../po/pages/account.page.js';
 
 export async function prepareUser() {
     
-    await browser.url('https://practicesoftwaretesting.com/auth/login');
-    await $('[data-test="email"]').setValue(user.email);
-    await $('[data-test="password"]').setValue(user.password);
-    await $('[data-test="login-submit"]').click();
+    await LoginPage.openLoginPage();
+    await LoginPage.loginForm.fillLoginForm(user);
+    
+    const titleText = await AccountPage.getTitleText();
+    expect(titleText).toContain('My account');
 
-    const title = await $('[data-test="page-title"]');
-    await title.waitForDisplayed({ timeout: 10000 });
-
-return user;
+    return user;
 }
