@@ -1,7 +1,5 @@
 import { createUser } from '../data/userData.js';
-import { test, expect } from '@playwright/test';
-import RegisterPage from '../pages/registerPage.js';
-import LoginPage from '../pages/loginPage.js';
+import { test, expect } from '../fixtures/pages.fixture.js';
 
 test.describe('Registration and login', () => {
 
@@ -14,24 +12,20 @@ test.describe.configure({ workers: 1 });
         user = createUser();
     });
 
-    test('The user can successfully register with valid personal data', async ({ page }) => {
+    test('The user can successfully register with valid personal data', async ({ registerPage, loginPage }) => {
         
-        const registerPage = new RegisterPage(page);
-
         await registerPage.openRegisterPage();
-        await registerPage.registerForm(user);
+        await registerPage.registerForm.fillRegisterForm(user);
         
-        await expect(registerPage.loginHeader).toBeVisible();
-    })
+        await expect(loginPage.loginForm.loginHeader).toBeVisible();
+    });
 
-    test('The user logs in with valid credentials', async ({ page }) => {
-
-        const loginPage = new LoginPage(page);
+    test('The user logs in with valid credentials', async ({ loginPage, profilePage }) => {
 
         await loginPage.openLoginPage();
-        await loginPage.loginForm(user);
+        await loginPage.loginForm.fillLoginForm(user);
 
-        await expect(loginPage.pageTitle).toContainText('My account');
-    } )
+        await profilePage.profile.verifyProfileIsOpen();
+    });
 })
 
