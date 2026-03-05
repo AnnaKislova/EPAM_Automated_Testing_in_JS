@@ -15,7 +15,7 @@ class FavoritesPage {
     }
 
     async getFavoritesTitle() {
-       return await this.favoritesTitle.getText();
+    return await this.favoritesTitle.getText();
     }
 }
 

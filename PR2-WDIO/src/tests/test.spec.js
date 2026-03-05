@@ -11,6 +11,7 @@ import AccountPage from '../po/pages/account.page.js';
 import ProductPage from '../po/pages/product.page.js';
 import FavoritesPage from '../po/pages/favorites.page.js';
 import CartPage from '../po/pages/cart.page.js';
+import ProfilePage from '../po/pages/profilePage.js';
 
 describe("Product Discovery", () => {
 
@@ -66,7 +67,7 @@ describe("Product Discovery", () => {
 
 describe("Registration and login", () => {
     
-    it.only('The user can successfully register with valid personal data', async () => {
+    it('The user can successfully register with valid personal data', async () => {
 
         await RegistrationPage.openRegistrationPage();
 
@@ -78,7 +79,7 @@ describe("Registration and login", () => {
 
     });
 
-    it.only('The user logs in with valid credentials', async () => {
+    it('The user logs in with valid credentials', async () => {
         
         await LoginPage.openLoginPage();
         await LoginPage.loginForm.fillLoginForm(user);
@@ -138,47 +139,20 @@ describe("Change password", () => {
 
     it("The logged-in user updates the password", async () => {
 
-        await browser.url("https://practicesoftwaretesting.com/account/profile");
+        await ProfilePage.openProfilePage();
 
-        const currentPassword = await $('[data-test="current-password"]');
-        await currentPassword.setValue(newUser.password);
+        await ProfilePage.fillCurrentPassword(newUser.password);
+        await ProfilePage.waitForCurrentPasswordValid();
 
-        await browser.keys("Tab");
+        await ProfilePage.fillNewPassword(newUser.newPassword);
 
-        await browser.waitUntil(
-            async () => !(await currentPassword.getAttribute("class")).includes("ng-pending"),
-            { timeout: 7000, timeoutMsg: "Async validation did not finish" }
-        );
-        
-        await browser.waitUntil(
-            async () => (await currentPassword.getAttribute("class")).includes("ng-valid"),
-            { timeout: 5000, timeoutMsg: "Current password did not become valid" }
-        );
+        await ProfilePage.fillConfirmPassword(newUser.newPassword);
+        await ProfilePage.waitForFormValid();
+        await ProfilePage.clickSubmit();
 
-        const newPassword = await $('[data-test="new-password"]');
-        await newPassword.setValue(newUser.newPassword);
-        await browser.keys("Tab");
-
-        const confirmPassword = await $('[data-test="new-password-confirm"]');
-        await confirmPassword.setValue(newUser.newPassword);
-        await browser.keys("Tab");
-
-        const form = await $("form");
-        await browser.waitUntil(
-            async () => (await form.getAttribute("class")).includes("ng-valid"),
-            { timeout: 5000, timeoutMsg: "Form did not become valid" }
-        );
-               
-        const submitBtn = await $('[data-test="change-password-submit"]');
-        await submitBtn.scrollIntoView();
-        await submitBtn.click(); 
-
-        await browser.waitUntil(
-            async () => (await browser.getUrl()).includes("/login"),
-            { timeout: 10000, timeoutMsg: "Expected redirect to /login after password change" }
-        );
-
-        await expect($("h3=Login")).toBeDisplayed();
+        await ProfilePage.waitForRedirectToLogin();
+            
+        await expect(LoginPage.loginHeader).toBeDisplayed();
     });
 });
 

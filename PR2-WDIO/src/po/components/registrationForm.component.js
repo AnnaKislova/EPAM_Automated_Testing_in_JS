@@ -16,7 +16,7 @@ class RegistrationFormComponent {
     }
 
     get postalCode() {
-       return  $('[data-test="postal_code"]');
+    return  $('[data-test="postal_code"]');
     }
 
     get city() {
@@ -69,5 +69,3 @@ export default RegistrationFormComponent;
         
     
 
-//         const loginHeader = await $('h3=Login');
-//         await loginHeader.waitForDisplayed({ timeout: 10000 });
