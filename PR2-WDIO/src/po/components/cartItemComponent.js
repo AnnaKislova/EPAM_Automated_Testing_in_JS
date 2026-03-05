@@ -4,7 +4,7 @@ class cartItemComponent {
     }
 
     async getProductName() {
-       return await this.productTitle.getText();
+    return await this.productTitle.getText();
     }
 }
 

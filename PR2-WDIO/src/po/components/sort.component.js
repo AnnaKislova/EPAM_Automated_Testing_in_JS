@@ -17,15 +17,15 @@ class SortComponent {
     }
 
     async getPrices() {
-         const priceElements = await this.elementsPrice;
-         const prices = [];
+        const priceElements = await this.elementsPrice;
+        const prices = [];
 
         for(const el of priceElements) {
             const priceText = await el.getText();
             const price = parseFloat(priceText.replace("$", ""));
             prices.push(price);
-         }
-         return prices;
+        }
+        return prices;
         
     }
 

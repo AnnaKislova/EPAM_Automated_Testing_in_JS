@@ -11,7 +11,7 @@ class RentalPage {
     }
 
     async waitForProductsLoaded() {
-         await browser.waitUntil(
+        await browser.waitUntil(
             async () => (await this.productElements).length > 0,
             { timeout: 10000, timeoutMsg: "Rental products did not load" }
         );
