@@ -24,9 +24,3 @@ test.describe('Product Discovery', () => {
         await homePage.sort.sortResultsContain(sortResults);
     });
 });
-
-
-
-
-
-

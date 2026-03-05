@@ -12,4 +12,3 @@ class FavoritesPage {
 }
 
 export default FavoritesPage;
-

@@ -27,5 +27,4 @@ test.describe.configure({ workers: 1 });
 
         await profilePage.profile.verifyProfileIsOpen();
     });
-})
-
+});

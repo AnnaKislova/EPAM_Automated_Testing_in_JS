@@ -5,6 +5,9 @@ import FavoritesPage from '../pages/favoritesPage.js';
 import RegisterPage from '../pages/registerPage.js';
 import LoginPage from '../pages/loginPage.js';
 import ProfilePage from '../pages/profilePage.js';
+import { createUser } from '../data/userData.js';
+import { apiRegister } from '../helpers/apiRegister.js';
+import { apiLogin } from '../helpers/apiAuth.js';
 
 
 export const test = base.extend({
@@ -27,6 +30,18 @@ export const test = base.extend({
         const profilePage = new ProfilePage(page);
         await use(profilePage);
     },
+    
+     user: async ({}, use) => {
+        const newUser = createUser();
+        await use(newUser);
+    },
+
+    authToken: async ({ request, user }, use) => {
+        await apiRegister(request, user);
+        const token = await apiLogin(request, user);
+        await use(token);
+    },
+
 
     productPage: async ({ page }, use) => {
         const productPage = new ProductPage(page);
