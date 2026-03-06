@@ -65,6 +65,7 @@ export const config = {
                 '--disable-infobars',
                 '--disable-notifications',
                 '--disable-extensions'
+    
                 
             ],
             prefs: {
@@ -73,12 +74,6 @@ export const config = {
             }
         }
     }],
-
-
-
-
-
-    
 
     //
     // ===================
@@ -150,7 +145,15 @@ export const config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+     reporters: [
+        'spec',
+        ['allure', {
+            outputDir: 'allure-results',
+            disableWebdriverStepsReporting: true,
+            disableWebdriverScreenshotsReporting: true,
+        }]
+    ],
+
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -172,7 +175,8 @@ export const config = {
      * @param {object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
+    //  onPrepare: function(config, capabilities) {
+       
     // },
     /**
      * Gets executed before a worker process is spawned and can be used to initialize specific service
@@ -297,7 +301,8 @@ export const config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
+    //     onComplete: async function(exitCode, config, capabilities, results) {
+    //     await reportAggregator.createReport();
     // },
     /**
     * Gets executed when a refresh happens.
