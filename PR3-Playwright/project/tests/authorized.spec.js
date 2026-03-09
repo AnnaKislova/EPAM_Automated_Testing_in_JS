@@ -1,47 +1,25 @@
-import { createUser } from '../data/userData.js';
-import { apiRegister } from '../helpers/apiRegister.js';
-import { apiLogin } from '../helpers/apiAuth.js';
 import { test, expect } from '../fixtures/pages.fixture.js';
 
 test.describe('Authorized user shopping actions', () => {
 
-    let user;
-    let token;
-
-    test.beforeAll(async ({ request }) => {
-        user = createUser();
-
-        await apiRegister(request, user);
-
-        token = await apiLogin(request,user);
-    });
-
-        test('The logged-in user adds a product to favorites', async ({ page, homePage, productPage, favoritesPage }) => {
+    test('The logged-in user adds a product to favorites', async ({ page, homePage, productPage, favoritesPage, authToken }) => {
 
         await page.addInitScript(token => {
             window.localStorage.setItem('auth-token', token);
-        }, token);
+        }, authToken);
 
             await homePage.openHomePage();
 
-            const productName = await homePage.getProduct();
+            const productName = await homePage.productList.getFirstProductName();
+            await homePage.productList.openFirstProduct();
 
-            await productPage.addToFavorites()
-        
+            await productPage.addToFavorites();
+
+            await productPage.header.openFavorites();
             await expect(favoritesPage.favoritesTitle).toContainText('Favorites');
         
             const productFavorite = await favoritesPage.getFavoriteProduct();
-            
             expect(productFavorite).toEqual(productName);
-
-
     });
 
 });
-
-
-
-
-
-
-

@@ -1,8 +1,14 @@
 class FavoritesPage {
     constructor(page) {
         this.page = page;
-        this.favoritesTitle = page.locator('[data-test="page-title"]');
-        this.productInFavorites = page.locator('[data-test="product-name"]');
+    }
+
+    get favoritesTitle() {
+        return this.page.locator('[data-test="page-title"]');
+    }
+
+    get productInFavorites() {
+        return this.page.locator('[data-test="product-name"]');
     }
 
     async getFavoriteProduct() {
@@ -12,4 +18,3 @@ class FavoritesPage {
 }
 
 export default FavoritesPage;
-
