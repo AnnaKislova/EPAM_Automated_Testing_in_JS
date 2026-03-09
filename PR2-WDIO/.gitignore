@@ -3,3 +3,6 @@ node_modules/
 reports/
 allure-results/
 allure-report/
+.DS_Store
+Thumbs.db
+.wdio/

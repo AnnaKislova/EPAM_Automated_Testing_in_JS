@@ -9,10 +9,11 @@
     "@wdio/spec-reporter": "^9.23.3",
     "allure-commandline": "^2.37.0",
     "chai": "^6.2.2",
-    "chromedriver": "^145.0.1"
+    "chromedriver": "^145.0.1",
+    "wdio-html-nice-reporter": "^8.1.7"
   },
   "scripts": {
-    "wdio": "wdio run ./src/config/wdio.conf.js",
+    "wdio": "wdio run ./wdio.conf.js",
     "report": "allure generate allure-results --clean && allure open"
   }
 }
