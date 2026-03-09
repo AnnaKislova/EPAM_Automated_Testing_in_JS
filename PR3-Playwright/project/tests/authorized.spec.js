@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/pages.fixture.js';
 
 test.describe('Authorized user shopping actions', () => {
 
-    test('The logged-in user adds a product to favorites', async ({ page, homePage, productPage, favoritesPage, authToken, user }) => {
+    test('The logged-in user adds a product to favorites', async ({ page, homePage, productPage, favoritesPage, authToken }) => {
 
         await page.addInitScript(token => {
             window.localStorage.setItem('auth-token', token);

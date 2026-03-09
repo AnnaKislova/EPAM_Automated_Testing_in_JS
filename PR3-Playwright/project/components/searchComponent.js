@@ -3,12 +3,24 @@ import { expect } from '@playwright/test';
 class SearchComponent {
     constructor(page) {
         this.page = page;
-        this.searchField = page.locator('[data-test="search-query"]');
-        this.searchButton = page.locator('[data-test="search-submit"]');
-        this.searchContainer = page.locator('[data-test="search_completed"]');
-        this.productElements = page.locator('[data-test="search_completed"] [data-test^="product-"] [data-test="product-name"]');
+    }
+        
+    get searchField() {
+        return this.page.locator('[data-test="search-query"]');
     }
 
+    get searchButton() {
+        return this.page.locator('[data-test="search-submit"]');
+    }
+
+    get searchContainer() {
+        return this.page.locator('[data-test="search_completed"]');
+    }
+
+    get productElements() {
+        return this.page.locator('[data-test="search_completed"] [data-test^="product-"] [data-test="product-name"]');
+    }
+    
     async searchProduct(query) {
         await this.searchField.fill(query);
         await this.searchButton.click();

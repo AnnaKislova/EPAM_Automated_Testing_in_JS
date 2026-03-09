@@ -1,9 +1,14 @@
 class HeaderComponent {
     constructor(page) {
         this.page = page;
-        this.myAccountMenu = page.locator('[data-test="nav-menu"]');
-        this.myFavorites = page.locator('[data-test="nav-my-favorites"]');
-        
+    }
+
+    get myAccountMenu() {
+        return this.page.locator('[data-test="nav-menu"]');
+    }
+
+    get myFavorites() {
+        return this.page.locator('[data-test="nav-my-favorites"]');
     }
 
     async openFavorites() {

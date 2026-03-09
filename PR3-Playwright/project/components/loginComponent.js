@@ -1,11 +1,26 @@
 class LoginComponent {
     constructor(page) {
         this.page = page;
-        this.loginHeader = page.getByRole('heading', { name: 'Login' });
-        this.emailField = page.locator('[data-test="email"]');
-        this.passwordField = page.locator('[data-test="password"]');
-        this.loginBtn = page.locator('[data-test="login-submit"]');
-        this.pageTitle = page.locator('[data-test="page-title"]');
+    }
+
+    get loginHeader() {
+        return this.page.getByRole('heading', { name: 'Login' });
+    }
+
+    get emailField() {
+        return this.page.locator('[data-test="email"]');
+    }
+
+    get passwordField() {
+        return this.page.locator('[data-test="password"]');
+    }
+
+    get loginBtn() {
+        return this.page.locator('[data-test="login-submit"]');
+    }
+
+    get pageTitle() {
+        return this.page.locator('[data-test="page-title"]');
     }
 
     async fillLoginForm(user) {

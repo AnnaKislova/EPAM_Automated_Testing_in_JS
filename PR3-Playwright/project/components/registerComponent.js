@@ -1,18 +1,54 @@
 class RegisterComponent {
     constructor(page) {
         this.page = page;
-        this.firstNameField = page.locator('[data-test="first-name"]');
-        this.lastNameField = page.locator('[data-test="last-name"]');
-        this.dateOfBirthdayField = page.locator('[data-test="dob"]');
-        this.streetField = page.locator('[data-test="street"]');
-        this.postalCodeField = page.locator('[data-test="postal_code"]');
-        this.cityField = page.locator('[data-test="city"]');
-        this.stateField = page.locator('[data-test="state"]');
-        this.countrySelect = page.locator('[data-test="country"]');
-        this.phoneField = page.locator('[data-test="phone"]');
-        this.emailField = page.locator('[data-test="email"]');
-        this.passwordField = page.locator('[data-test="password"]');
-        this.registerSubmitBtn = page.locator('[data-test="register-submit"]');
+    }
+
+    get firstNameField() {
+        return this.page.locator('[data-test="first-name"]');
+    }
+
+    get lastNameField() {
+        return this.page.locator('[data-test="last-name"]');
+    }
+
+    get dateOfBirthdayField() {
+        return this.page.locator('[data-test="dob"]');
+    }
+
+    get streetField() {
+         return this.page.locator('[data-test="street"]');
+    }
+
+    get postalCodeField() {
+        return this.page.locator('[data-test="postal_code"]');
+    }
+
+    get cityField() {
+        return this.page.locator('[data-test="city"]');
+    }
+
+    get stateField() {
+        return this.page.locator('[data-test="state"]');
+    }
+
+    get countrySelect() {
+        return this.page.locator('[data-test="country"]');
+    }
+
+    get phoneField() {
+        return this.page.locator('[data-test="phone"]');
+    }
+
+    get emailField() {
+        return this.page.locator('[data-test="email"]');
+    }
+
+    get passwordField() {
+        return this.page.locator('[data-test="password"]');
+    }
+
+    get registerSubmitBtn() {
+        return this.page.locator('[data-test="register-submit"]');
     }
 
     async fillRegisterForm(user) {

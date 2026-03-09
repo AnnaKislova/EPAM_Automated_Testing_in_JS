@@ -3,10 +3,22 @@ import { expect } from '@playwright/test';
 class SortComponent {
     constructor(page) {
         this.page = page;
-        this.sortOption = page.locator('[data-test="sort"]');
-        this.sortContainer = page.locator('[data-test="sorting_completed"]');
-        this.priceElements = page.locator('[data-test="sorting_completed"] [data-test^="product-"] [data-test="product-price"]');
-        this.product = page.locator('[data-test="product-name"]');
+    }
+
+    get sortOption() {
+        return this.page.locator('[data-test="sort"]');
+    }
+
+    get sortContainer() {
+        return this.page.locator('[data-test="sorting_completed"]');
+    }
+
+    get priceElements() {
+        return  this.page.locator('[data-test="sorting_completed"] [data-test^="product-"] [data-test="product-price"]');
+    }
+
+    get product() {
+        return this.page.locator('[data-test="product-name"]');
     }
 
     async sortProduct() {

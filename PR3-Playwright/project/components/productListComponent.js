@@ -1,7 +1,10 @@
 class ProductListComponent {
     constructor(page) {
         this.page = page;
-        this.productNames = page.locator('[data-test="product-name"]');
+    }
+
+    get productNames() {
+        return this.page.locator('[data-test="product-name"]');
     }
 
     async getFirstProductName() {

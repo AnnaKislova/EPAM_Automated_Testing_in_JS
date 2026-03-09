@@ -3,7 +3,10 @@ import { expect } from '@playwright/test';
 class ProfileComponent {
     constructor(page) {
         this.page = page;
-        this.accountTitle = page.locator('[data-test="page-title"]');
+    }
+
+    get accountTitle() {
+        return this.page.locator('[data-test="page-title"]');
     }
     
     async verifyProfileIsOpen() {
