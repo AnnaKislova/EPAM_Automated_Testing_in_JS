@@ -26,5 +26,4 @@ class RentalPage {
     }
 }
 
-export default new RentalPage();
-
+export default RentalPage;

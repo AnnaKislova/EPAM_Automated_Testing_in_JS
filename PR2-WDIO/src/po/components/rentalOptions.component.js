@@ -32,4 +32,3 @@ class RentalOptionsComponent {
 }
 
 export default RentalOptionsComponent;
-

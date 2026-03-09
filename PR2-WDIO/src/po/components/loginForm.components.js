@@ -1,4 +1,4 @@
-class LoginFormComponents {
+class LoginFormComponent {
     
     get emailField() {
         return $('[data-test="email"]');
@@ -20,5 +20,4 @@ class LoginFormComponents {
 
 }
 
-export default LoginFormComponents;
-
+export default LoginFormComponent;

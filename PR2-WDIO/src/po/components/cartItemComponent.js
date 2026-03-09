@@ -1,4 +1,4 @@
-class cartItemComponent {
+class CartItemComponent {
     get productTitle() {
         return $('[data-test="product-title"]');
     }
@@ -8,5 +8,4 @@ class cartItemComponent {
     }
 }
 
-export default cartItemComponent;
-
+export default CartItemComponent;

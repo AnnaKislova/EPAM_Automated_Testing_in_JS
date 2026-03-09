@@ -9,4 +9,3 @@ class ProductRentalComponent {
 }
 
 export default ProductRentalComponent;
-
