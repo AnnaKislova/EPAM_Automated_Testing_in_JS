@@ -7,5 +7,4 @@ class AccountPage {
         return await this.accountTitle.getText();     
     }
 }
-export default new AccountPage();
-
+export default AccountPage;

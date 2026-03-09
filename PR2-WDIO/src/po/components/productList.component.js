@@ -16,9 +16,3 @@ class ProductListComponent {
 }
 
 export default ProductListComponent;
-
-
-
-
-
-

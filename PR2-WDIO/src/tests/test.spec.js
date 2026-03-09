@@ -14,14 +14,23 @@ import CartPage from '../po/pages/cart.page.js';
 import ProfilePage from '../po/pages/profilePage.js';
 
 describe("Product Discovery", () => {
+    let homePage;
+    let rentalPage;
+    let rentalProductPage;
+
+    beforeEach(() => {
+        homePage = new HomePage();
+        rentalPage = new RentalPage();
+        rentalProductPage = new RentalProductPage();
+    });
 
     it("Search returns products related to 'hammer'", async () => {
         
-        await HomePage.open();
+        await homePage.open();
 
-        await HomePage.search.searchFor(product.hammer);
+        await homePage.search.searchFor(product.hammer);
 
-        const titles = await HomePage.search.getResultTitles();
+        const titles = await homePage.search.getResultTitles();
 
         for (const title of titles) {
             expect(title.toLowerCase()).toHaveText(product.hammer);
@@ -31,11 +40,11 @@ describe("Product Discovery", () => {
 
     it("Products are sorted by price in ascending order ", async () => {
         
-        await HomePage.open();
+        await homePage.open();
 
-        await HomePage.sort.sortOption('price,asc');
+        await homePage.sort.sortOption('price,asc');
 
-        const prices = await HomePage.sort.getPrices();
+        const prices = await homePage.sort.getPrices();
 
         const sorted = [...prices].sort((a, b) => a - b);
         expect(prices).toEqual(sorted);
@@ -44,21 +53,21 @@ describe("Product Discovery", () => {
 
     it("Total price updates correctly for rental products", async () => {
         
-        await RentalPage.open();
+        await rentalPage.open();
 
-        await RentalPage.waitForProductsLoaded();
+        await rentalPage.waitForProductsLoaded();
 
-        await RentalPage.openProduct(0);
+        await rentalPage.openProduct(0);
 
-        const unitPrice = await RentalProductPage.options.getUnitPrice();
+        const unitPrice = await rentalProductPage.options.getUnitPrice();
 
-        await RentalProductPage.options.setDuration();
+        await rentalProductPage.options.setDuration();
 
-        const totalPrice = await RentalProductPage.options.getTotalPrice();
+        const totalPrice = await rentalProductPage.options.getTotalPrice();
 
         expect(totalPrice).toBeCloseTo(unitPrice * 3, 2);
 
-        const sliderValue = await RentalProductPage.options.getSliderValue();
+        const sliderValue = await rentalProductPage.options.getSliderValue();
         expect(sliderValue).toBe('3');
 
     });
@@ -66,14 +75,23 @@ describe("Product Discovery", () => {
 });
 
 describe("Registration and login", () => {
+    let registrationPage;
+    let loginPage;
+    let accountPage;
+
+    beforeEach(() => {
+        registrationPage = new RegistrationPage();
+        loginPage = new LoginPage();
+        accountPage = new AccountPage();
+    });
     
     it('The user can successfully register with valid personal data', async () => {
 
-        await RegistrationPage.openRegistrationPage();
+        await registrationPage.openRegistrationPage();
 
-        await RegistrationPage.registrationForm.fillRegisterForm(user);
+        await registrationPage.registrationForm.fillRegisterForm(user);
 
-        const loginHeader = await LoginPage.waitForLoginHeader();
+        const loginHeader = await loginPage.waitForLoginHeader();
 
         await expect(loginHeader).toBeDisplayed();
 
@@ -81,10 +99,10 @@ describe("Registration and login", () => {
 
     it('The user logs in with valid credentials', async () => {
         
-        await LoginPage.openLoginPage();
-        await LoginPage.loginForm.fillLoginForm(user);
+        await loginPage.openLoginPage();
+        await loginPage.loginForm.fillLoginForm(user);
 
-        const titleText = await AccountPage.getTitleText();
+        const titleText = await accountPage.getTitleText();
         expect(titleText).toContain('My account');
 
     });
@@ -93,38 +111,49 @@ describe("Registration and login", () => {
 
 describe('Shopping actions', () => {
     let user;
+    let homePage;
+    let productPage;
+    let favoritesPage;
+    let cartPage;
 
     before(async () => {
         user = await prepareUser();
         
     });
 
+    beforeEach(() => {
+        homePage = new HomePage();
+        productPage = new ProductPage();
+        favoritesPage = new FavoritesPage();
+        cartPage = new CartPage();
+    });
+
     it('The logged-in user adds a product to favorites', async () => {
-        await HomePage.open();
-        const productName = await HomePage.productList.getFirstProductName();
-        await HomePage.productList.openFirstProduct();
+        await homePage.open();
+        const productName = await homePage.productList.getFirstProductName();
+        await homePage.productList.openFirstProduct();
 
-        await ProductPage.addToFavorite();
-        await ProductPage.header.openFavorites();
+        await productPage.addToFavorite();
+        await productPage.header.openFavorites();
 
-        const titleText = await FavoritesPage.getFavoritesTitle();
+        const titleText = await favoritesPage.getFavoritesTitle();
         assert.equal(titleText, "Favorites", "Expected to be on My account page");
 
-        const productFavorite = await FavoritesPage.productList.getFirstProductName();
+        const productFavorite = await favoritesPage.productList.getFirstProductName();
         assert.equal(productFavorite, productName, "Product favorite should match the one added")
 
     });
 
     it("The logged-in user adds a product to the cart", async () => {
         
-        await HomePage.open();
-        const productName = await HomePage.productList.getFirstProductName();
-        await HomePage.productList.openFirstProduct();
+        await homePage.open();
+        const productName = await homePage.productList.getFirstProductName();
+        await homePage.productList.openFirstProduct();
 
-        await ProductPage.addToCart();
-        await ProductPage.header.openCart();
+        await productPage.addToCart();
+        await productPage.header.openCart();
         
-        const productText = await CartPage.cartItems.getProductName();
+        const productText = await cartPage.cartItems.getProductName();
 
         assert.equal(productText.trim(), productName.trim(), `Expected product in a cart to be ${productName}`);
     })
@@ -132,28 +161,33 @@ describe('Shopping actions', () => {
 
 describe("Change password", () => {
     let newUser;
+    let profilePage;
+    let loginPage;
 
     before(async () => {
         newUser = await prepareUser();
     });
 
+    beforeEach(() => {
+        profilePage = new ProfilePage();
+        loginPage = new LoginPage();
+    })
+
     it("The logged-in user updates the password", async () => {
 
-        await ProfilePage.openProfilePage();
+        await profilePage.openProfilePage();
 
-        await ProfilePage.fillCurrentPassword(newUser.password);
-        await ProfilePage.waitForCurrentPasswordValid();
+        await profilePage.fillCurrentPassword(newUser.password);
+        await profilePage.waitForCurrentPasswordValid();
 
-        await ProfilePage.fillNewPassword(newUser.newPassword);
+        await profilePage.fillNewPassword(newUser.newPassword);
 
-        await ProfilePage.fillConfirmPassword(newUser.newPassword);
-        await ProfilePage.waitForFormValid();
-        await ProfilePage.clickSubmit();
+        await profilePage.fillConfirmPassword(newUser.newPassword);
+        await profilePage.waitForFormValid();
+        await profilePage.clickSubmit();
 
-        await ProfilePage.waitForRedirectToLogin();
+        await profilePage.waitForRedirectToLogin();
             
-        await expect(LoginPage.loginHeader).toBeDisplayed();
+        await expect(loginPage.loginHeader).toBeDisplayed();
     });
 });
-
-

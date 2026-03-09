@@ -1,4 +1,4 @@
-import LoginFormComponents from "../components/loginForm.components";
+import LoginFormComponent from "../components/loginForm.components";
 
 class LoginPage {
     get loginHeader() {
@@ -6,7 +6,7 @@ class LoginPage {
     }
 
     get loginForm() {
-        return new LoginFormComponents();
+        return new LoginFormComponent();
     }
 
     async waitForLoginHeader() {
@@ -19,5 +19,4 @@ class LoginPage {
     }
 }
 
-export default new LoginPage();
-
+export default LoginPage;

@@ -6,4 +6,4 @@ class CartPage {
     }
 }
 
-export default new CartPage();
+export default CartPage;

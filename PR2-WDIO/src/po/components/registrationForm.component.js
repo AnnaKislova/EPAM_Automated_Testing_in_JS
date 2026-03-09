@@ -7,7 +7,7 @@ class RegistrationFormComponent {
         return $('[data-test="last-name"]');
     }
 
-    get dateOfBirthd() {
+    get dateOfBirth() {
         return $('[data-test="dob"]');
     }
 
@@ -50,7 +50,7 @@ class RegistrationFormComponent {
     async fillRegisterForm(user) {
         await this.firstName.setValue(user.firstName);
         await this.lastName.setValue(user.lastName);
-        await this.dateOfBirthd.setValue(user.dateOfBirthday);
+        await this.dateOfBirth.setValue(user.dateOfBirthday);
         await this.street.setValue(user.street);
         await this.postalCode.setValue(user.postalCode);
         await this.city.setValue(user.city);
@@ -64,8 +64,3 @@ class RegistrationFormComponent {
 }
 
 export default RegistrationFormComponent;
-
-
-        
-    
-

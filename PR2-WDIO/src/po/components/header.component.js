@@ -1,5 +1,5 @@
 class HeaderComponent {
-    get accountMenuBt() {
+    get accountMenuBtn() {
         return $('[data-test="nav-menu"]');
     }
 
@@ -12,16 +12,15 @@ class HeaderComponent {
     }
 
     async openFavorites() {
-        await this.accountMenuBt.click();
+        await this.accountMenuBtn.click();
         await this.favoritesBtn.click();
     }
 
     async openCart() {
-        await this.accountMenuBt.click();
+        await this.accountMenuBtn.click();
         await this.cartBtn.click();
     }
 
 }
 
 export default HeaderComponent;
-

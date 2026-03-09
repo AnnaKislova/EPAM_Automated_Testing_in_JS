@@ -19,7 +19,5 @@ class FavoritesPage {
     }
 }
 
-export default new FavoritesPage();
-
-
+export default FavoritesPage;
        

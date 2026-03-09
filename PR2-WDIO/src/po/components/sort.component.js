@@ -32,16 +32,3 @@ class SortComponent {
 }
 
 export default SortComponent;
-
-
-
-
-
-
-
-
-
-
-
-
-
