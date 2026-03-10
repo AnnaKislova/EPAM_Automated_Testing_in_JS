@@ -1,10 +1,10 @@
 class AccountPage {
-    get accountTitle() {
-        return $('[data-test="page-title"]');
-    }
+  get accountTitle() {
+    return $('[data-test="page-title"]');
+  }
 
-    async getTitleText() {
-        return await this.accountTitle.getText();     
-    }
+  async getTitleText() {
+    return await this.accountTitle.getText();
+  }
 }
 export default AccountPage;

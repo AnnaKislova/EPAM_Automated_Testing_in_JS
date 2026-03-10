@@ -1,0 +1,10 @@
+node_modules
+dist
+reports
+allure-results
+allure-report
+
+package.json
+package-lock.json
+tslint.json
+*.yml
