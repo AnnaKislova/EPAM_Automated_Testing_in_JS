@@ -1,9 +1,9 @@
-import cartItemComponent from "../components/cartItemComponent";
+import cartItemComponent from '../components/cartItemComponent';
 
 class CartPage {
-    get cartItems() {
-        return new cartItemComponent();
-    }
+  get cartItems() {
+    return new cartItemComponent();
+  }
 }
 
 export default CartPage;
