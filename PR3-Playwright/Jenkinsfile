@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone repo') {
+            steps {
+                git branch: 'main', url: 'https://github.com/AnnaKislova/EPAM_Automated_Testing_in_JS'
+            }
+        }
+
+        stage('Install & Test') {
+            steps {
+                dir('PR3-Playwright') {
+                    bat 'npm install'
+                    bat 'npx playwright install'
+                    bat 'npx playwright test'
+                }
+            }
+        }
+    }
+}
