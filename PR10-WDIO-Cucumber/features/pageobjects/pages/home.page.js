@@ -1,4 +1,5 @@
 import SearchComponent from "../components/search.component";
+import SortComponent from "../components/sort.component";
 
 class HomePage {
   get search() {
