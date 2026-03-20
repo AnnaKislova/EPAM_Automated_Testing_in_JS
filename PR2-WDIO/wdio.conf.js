@@ -1,4 +1,8 @@
+import { ReportAggregator, HtmlReporter } from 'wdio-html-nice-reporter';
+let reportAggregator;
+
 export const config = {
+
     //
     // ====================
     // Runner Configuration
@@ -23,7 +27,7 @@ export const config = {
     // of the config file unless it's absolute.
     //
     specs: [
-        '../tests/**/*.js'
+        './src/tests/**/*.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -65,6 +69,7 @@ export const config = {
                 '--disable-infobars',
                 '--disable-notifications',
                 '--disable-extensions'
+    
                 
             ],
             prefs: {
@@ -73,12 +78,6 @@ export const config = {
             }
         }
     }],
-
-
-
-
-
-    
 
     //
     // ===================
@@ -150,7 +149,22 @@ export const config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: [
+        'spec',
+        ['allure', {
+            outputDir: 'allure-results',
+            disableWebdriverStepsReporting: false,
+            disableWebdriverScreenshotsReporting: false,
+        }],
+        ['html-nice', {
+        outputDir: './reports/html-reports/',
+        filename: 'report.html',
+        reportTitle: 'Test Report',
+        showInBrowser: true,
+        linkScreenshots: true,
+        }]
+    ],
+
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -172,8 +186,16 @@ export const config = {
      * @param {object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function () {
+    reportAggregator = new ReportAggregator({
+        outputDir: './reports/html-reports/',
+        filename: 'master-report.html',
+        reportTitle: 'Master Report',
+    });
+    
+    reportAggregator.clean();
+
+    },
     /**
      * Gets executed before a worker process is spawned and can be used to initialize specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -297,8 +319,10 @@ export const config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
-    // },
+    onComplete: async function () {
+        await reportAggregator.createReport();
+    },
+
     /**
     * Gets executed when a refresh happens.
     * @param {string} oldSessionId session ID of the old session
