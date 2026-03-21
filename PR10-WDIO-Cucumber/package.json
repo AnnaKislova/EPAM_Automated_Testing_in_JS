@@ -8,7 +8,11 @@
     "wdio": "wdio run ./wdio.conf.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "test:discovery": "wdio run ./wdio.conf.js --cucumberOpts.tagExpression='@productDiscovery'",
+    "test:login": "wdio run ./wdio.conf.js --cucumberOpts.tagExpression='@registrationLogin'",
+    "test:shopping": "wdio run ./wdio.conf.js --cucumberOpts.tagExpression='@shoppingActions'",
+    "test:password": "wdio run ./wdio.conf.js --cucumberOpts.tagExpression='@changePassword'"
   },
   "keywords": [],
   "author": "",
