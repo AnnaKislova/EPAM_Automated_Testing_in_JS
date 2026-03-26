@@ -27,7 +27,7 @@ jobs:
         working-directory: PR2-WDIO
         run: npm run format
 
-        pw-lint:
+  pw-lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -48,4 +48,3 @@ jobs:
       - name: Run Prettier Playwright
         working-directory: PR3-Playwright
         run: npm run format
-
