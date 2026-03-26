@@ -3,14 +3,14 @@ import LoginPage from '../po/pages/login.page.js';
 import AccountPage from '../po/pages/account.page.js';
 
 export async function prepareUser() {
-    const loginPage = new LoginPage();
-    const accountPage = new AccountPage();
+  const loginPage = new LoginPage();
+  const accountPage = new AccountPage();
 
-    await loginPage.openLoginPage();
-    await loginPage.loginForm.fillLoginForm(user);
-    
-    const titleText = await accountPage.getTitleText();
-    expect(titleText).toContain('My account');
+  await loginPage.openLoginPage();
+  await loginPage.loginForm.fillLoginForm(user);
 
-    return user;
+  const titleText = await accountPage.getTitleText();
+  expect(titleText).toContain('My account');
+
+  return user;
 }
