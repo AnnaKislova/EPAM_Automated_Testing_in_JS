@@ -1,11 +1,11 @@
 class ProductRentalComponent {
-    constructor(root) {
-        this.root = root;
-    }
+  constructor(root) {
+    this.root = root;
+  }
 
-    async openRentalProduct() {
-        await this.root.click();
-    }
+  async openRentalProduct() {
+    await this.root.click();
+  }
 }
 
 export default ProductRentalComponent;

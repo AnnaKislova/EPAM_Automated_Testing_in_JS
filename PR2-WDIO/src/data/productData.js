@@ -1,3 +1,3 @@
 export const product = {
-    hammer: 'hammer'
+  hammer: 'hammer',
 };
