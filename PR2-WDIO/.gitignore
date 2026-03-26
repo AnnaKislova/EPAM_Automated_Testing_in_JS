@@ -1,5 +1,8 @@
 node_modules/
 *.log
 reports/
-allure-report/
 allure-results/
+allure-report/
+.DS_Store
+Thumbs.db
+.wdio/
