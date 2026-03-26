@@ -26,3 +26,26 @@ jobs:
       - name: Run Prettier WDIO
         working-directory: PR2-WDIO
         run: npm run format
+
+        pw-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies Playwright
+        working-directory: PR3-Playwright
+        run: npm install
+
+      - name: Run ESLint Playwright
+        working-directory: PR3-Playwright
+        run: npm run lint
+
+      - name: Run Prettier Playwright
+        working-directory: PR3-Playwright
+        run: npm run format
+
