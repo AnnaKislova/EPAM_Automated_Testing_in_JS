@@ -70,3 +70,25 @@ jobs:
       - name: Run Prettier API
         working-directory: PR5-API
         run: npm run format
+
+  cucumber-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies Cucumber
+        working-directory: PR10-WDIO-Cucumber
+        run: npm install
+
+      - name: Run ESLint Cucumber
+        working-directory: PR10-WDIO-Cucumber
+        run: npm run lint
+
+      - name: Run Prettier Cucumber
+        working-directory: PR10-WDIO-Cucumber
+        run: npm run format
